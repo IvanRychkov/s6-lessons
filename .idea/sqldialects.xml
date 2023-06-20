@@ -3,5 +3,6 @@
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/Тема 2. Аналитические СУБД. Vertica/3. Знакомство с Vertica/Задание 2/realization.sql" dialect="Vertica" />
     <file url="file://$PROJECT_DIR$/Тема 2. Аналитические СУБД. Vertica/5. Запись данных в Vertica часть 2/Задание 2/members.sql" dialect="Vertica" />
+    <file url="file://$PROJECT_DIR$/Тема 2. Аналитические СУБД. Vertica/9. Выбираем параметры сегментации/Задание 1/precode.sql" dialect="Vertica" />
   </component>
 </project>

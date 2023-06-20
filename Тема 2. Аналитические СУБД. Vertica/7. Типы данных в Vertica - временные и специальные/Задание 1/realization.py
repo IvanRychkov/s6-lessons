@@ -1,1 +1,1 @@
-vertica_user = 'укажите свой логин'
+from conn_info import *
