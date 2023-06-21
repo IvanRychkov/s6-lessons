@@ -15,3 +15,10 @@ create table dialogs
 copy dialogs (message_id, message_ts, message_from, message_to, message, message_group)
     from local '//Users/ivan/dev/s6-lessons/Тема 2. Аналитические СУБД. Vertica/10. Выбираем параметры сортировки/Задание 1/dialogs.csv'
     delimiter ',';
+
+truncate table members;
+copy members (id, age, gender, email enforcelength)
+    from local '/Users/ivan/dev/s6-lessons/Тема 2. Аналитические СУБД. Vertica/5. Запись данных в Vertica часть 2/Задание 2/members.csv'
+    delimiter ';'
+    rejected data as table members_rej;
+select * from members limit 10;
