@@ -1,15 +1,17 @@
 drop table if exists dialogs;
-
 create table dialogs
 (
-    message_id   int PRIMARY KEY,
-    message_ts   timestamp(6),
-    message_from int REFERENCES members(id),
-    message_to int REFERENCES members(id),
-    message varchar(1000),
-    message_type varchar(100)
+    message_id    int PRIMARY KEY,
+    message_ts    timestamp(6),
+    message_from  int REFERENCES members (id),
+    message_to    int REFERENCES members (id),
+    message       varchar(1000),
+    message_group int
 )
-order by ХХХ, XXX
-SEGMENTED BY hash(message_id) all nodes
-PARTITION BY message_ts::date
-;
+    order by message_from, message_ts
+    SEGMENTED BY hash(message_id) all nodes;
+
+-- truncate table dialogs;
+copy dialogs (message_id, message_ts, message_from, message_to, message, message_group)
+    from local '//Users/ivan/dev/s6-lessons/Тема 2. Аналитические СУБД. Vertica/10. Выбираем параметры сортировки/Задание 1/dialogs.csv'
+    delimiter ',';
