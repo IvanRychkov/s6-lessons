@@ -18,10 +18,10 @@ def upload_file(table):
         copy RYCHYRYCHYANDEXRU__STAGING.{table}
         from local '/data/{table}.csv'
         delimiter ','
-        enclosed by '"'
-        null ''
+        --enclosed by '"'
+        --null ''
         skip 1
-        rejected data as table RYCHYRYCHYANDEXRU__STAGING.{table}_rej
+        -- rejected data as table RYCHYRYCHYANDEXRU__STAGING.{table}_rej
         '''
         curs.execute(insert_stmt.format(table=table))
         conn.commit()
