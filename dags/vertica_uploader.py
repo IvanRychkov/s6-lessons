@@ -1,5 +1,6 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
+from airflow.models import Variable
 from pendulum import datetime
 import vertica_python
 from conn_info import conn_info
@@ -8,11 +9,15 @@ files = [
     'users',
     'groups',
     'dialogs',
+    'group_log'
 ]
 
 
 def upload_file(table):
-    with vertica_python.connect(**conn_info) as conn:
+    with vertica_python.connect(
+            password=Variable.get('RYCHYRYCHYANDEXRU_VERTICA_PASSWORD'),
+            **conn_info
+    ) as conn:
         curs = conn.cursor()
         insert_stmt = '''
         copy RYCHYRYCHYANDEXRU__STAGING.{table}
