@@ -11,6 +11,7 @@ files = [
     'users.csv',
     'groups.csv',
     'dialogs.csv',
+    'group_log.csv',
 ]
 
 bash_command_tmpl = """
