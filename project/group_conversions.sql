@@ -31,4 +31,4 @@ select ug.hk_group_id,
        cnt_users_in_group_with_messages / cnt_added_users group_conversion
 from user_group_log ug
          join user_group_messages using (hk_group_id)
-order by group_conversion desc
+order by group_conversion desc;
