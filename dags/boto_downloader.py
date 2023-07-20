@@ -1,6 +1,7 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
+from airflow.models import Variable
 from pendulum import datetime
 
 import boto3
@@ -24,8 +25,8 @@ def download_file(bucket_name, filename):
     s3 = s.client(
         service_name='s3',
         endpoint_url='https://storage.yandexcloud.net',
-        aws_access_key_id=AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        aws_access_key_id=Variable.get('AWS_ACCESS_KEY_ID'),
+        aws_secret_access_key=Variable.get('AWS_SECRET_ACCESS_KEY'),
     )
 
     s3.download_file(Bucket=bucket_name, Key=filename, Filename='/data/' + filename)
