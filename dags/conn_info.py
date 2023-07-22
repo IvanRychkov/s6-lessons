@@ -4,7 +4,7 @@ conn_info = {'host': 'vertica.tgcloudenv.ru',
              'port': '5433',
              'user': 'rychyrychyandexru',
              'database': 'dwh',
-             'autocommit': True
+             'autocommit': False,
              }
 
 vertica_user = conn_info['user']

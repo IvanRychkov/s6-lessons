@@ -23,13 +23,11 @@ def upload_file(table):
     ) as conn:
         curs = conn.cursor()
         insert_stmt = '''
+        truncate table RYCHYRYCHYANDEXRU__STAGING.{table};
         copy RYCHYRYCHYANDEXRU__STAGING.{table}
         from local '/data/{table}.csv'
         delimiter ','
-        --enclosed by '"'
-        --null ''
         skip 1
-        -- rejected data as table RYCHYRYCHYANDEXRU__STAGING.{table}_rej
         '''
         logging.info(f'Uploading /data/{table}.csv -> RYCHYRYCHYANDEXRU__STAGING.{table}...')
         curs.execute(insert_stmt.format(table=table))
