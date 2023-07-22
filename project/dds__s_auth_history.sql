@@ -4,7 +4,7 @@ create table RYCHYRYCHYANDEXRU__DWH.s_auth_history
     hk_l_user_group_activity int references RYCHYRYCHYANDEXRU__DWH.l_user_group_activity (hk_l_user_group_activity),
     user_id_from             int,
     event                    varchar(6)  not null,
-    event_dt                 timestamp   not null,
+    event_ts                 timestamp   not null,
     load_dt                  timestamp   not null,
     load_src                 varchar(20) not null
 )
@@ -13,12 +13,12 @@ create table RYCHYRYCHYANDEXRU__DWH.s_auth_history
     partition by load_dt::date group by calendar_hierarchy_day(load_dt::date, 3, 2);
 
 
-insert into RYCHYRYCHYANDEXRU__DWH.s_auth_history (hk_l_user_group_activity, user_id_from, event, event_dt, load_dt,
+insert into RYCHYRYCHYANDEXRU__DWH.s_auth_history (hk_l_user_group_activity, user_id_from, event, event_ts, load_dt,
                                                    load_src)
 select hash(hk_user_id, hk_group_id),
        user_id_from,
        event,
-       datetime,
+       event_ts,
        now(),
        's3'
 from RYCHYRYCHYANDEXRU__STAGING.group_log l
@@ -26,5 +26,5 @@ from RYCHYRYCHYANDEXRU__STAGING.group_log l
                    on hash(l.user_id) = hu.hk_user_id
                        and hash(l.group_id) = hu.hk_group_id
 -- Догружаем только инкремент
-where datetime > (select nvl(max(event_dt), '2000-01-01') from RYCHYRYCHYANDEXRU__DWH.s_auth_history)
+where event_ts > (select nvl(max(event_ts), '2000-01-01') from RYCHYRYCHYANDEXRU__DWH.s_auth_history)
 ;
