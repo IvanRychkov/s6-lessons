@@ -4,7 +4,6 @@ conn_info = {'host': 'vertica.tgcloudenv.ru',
              'port': '5433',
              'user': 'rychyrychyandexru',
              'database': 'dwh',
-             # Вначале он нам понадобится, а дальше — решите позже сами
              'autocommit': True
              }
 
