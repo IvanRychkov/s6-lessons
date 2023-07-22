@@ -5,9 +5,9 @@ create table RYCHYRYCHYANDEXRU__STAGING.group_log
     user_id      int        not null,
     user_id_from int,
     event        varchar(6) not null,
-    datetime     timestamp  not null
+    event_ts     timestamp  not null
 )
-    order by group_id, event, datetime
+    order by group_id, event, event_ts
     segmented by hash(group_id) all nodes
-    partition by datetime::date
-        group by calendar_hierarchy_day(datetime::date, 3, 2);
+    partition by event_ts::date
+        group by calendar_hierarchy_day(event_ts::date, 3, 2);
