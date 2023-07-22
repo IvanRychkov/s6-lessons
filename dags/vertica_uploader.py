@@ -1,8 +1,10 @@
+import logging
+import vertica_python
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable
 from pendulum import datetime
-import vertica_python
 from conn_info import conn_info
 
 files = [
@@ -14,6 +16,7 @@ files = [
 
 
 def upload_file(table):
+    logging.info('Creating Vertica connection...')
     with vertica_python.connect(
             password=Variable.get('RYCHYRYCHYANDEXRU_VERTICA_PASSWORD'),
             **conn_info
@@ -28,8 +31,10 @@ def upload_file(table):
         skip 1
         -- rejected data as table RYCHYRYCHYANDEXRU__STAGING.{table}_rej
         '''
+        logging.info(f'Uploading /data/{table}.csv -> RYCHYRYCHYANDEXRU__STAGING.{table}...')
         curs.execute(insert_stmt.format(table=table))
         conn.commit()
+        logging.info(f'Upload OK!')
 
 
 dag = DAG(

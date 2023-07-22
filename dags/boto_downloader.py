@@ -5,7 +5,8 @@ from airflow.models import Variable
 from pendulum import datetime
 
 import boto3
-from conn_info import *
+import logging
+from conn_info import *  # noqa
 
 bucket = 'sprint6'
 files = [
@@ -29,7 +30,9 @@ def download_file(bucket_name, filename):
         aws_secret_access_key=Variable.get('AWS_SECRET_ACCESS_KEY'),
     )
 
+    logging.info(f'Downloading {filename} from s3...')
     s3.download_file(Bucket=bucket_name, Key=filename, Filename='/data/' + filename)
+    logging.info(f'Successfully downloaded to /data/{filename}! finishing...')
 
 
 dag = DAG(
